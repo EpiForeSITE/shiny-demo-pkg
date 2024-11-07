@@ -1,12 +1,14 @@
-library(shiny)
-library(bslib)
-
-# Define UI for app that draws a histogram ----
-ui <- page_sidebar(
+ui <- bslib::page_sidebar(
   # App title ----
-  title = "Hello Shiny!",
+  title = div(
+    tags$h1("Hello shiny!"),
+    tags$img(
+      src="figs/logo.png",
+      width="50px"
+      )
+  ),
   # Sidebar panel for inputs ----
-  sidebar = sidebar(
+  sidebar = bslib::sidebar(
     # Input: Slider for the number of bins ----
     sliderInput(
       inputId = "bins",
@@ -16,15 +18,13 @@ ui <- page_sidebar(
       value = 30
     )
   ),
+
   # Output: Histogram ----
   plotOutput(outputId = "distPlot")
 )
 
-#' Define server logic required to draw a histogram
-#' @importFrom graphics hist
-#' @importFrom utils data
-#' @noRd
 server <- function(input, output) {
+
 
   # Histogram of the Old Faithful Geyser Data ----
   # with requested number of bins
@@ -47,22 +47,4 @@ server <- function(input, output) {
 
 }
 
-#' Runs the shiny app
-#' @param ... Further arguments passed to [shiny::shinyApp()].
-#' @details
-#' The app featured in this package is the one presented in the shiny demo:
-#' <https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html>.
-#'
-#' @return
-#' Starts the execution of the app, printing the port
-#' on the console.
-#' @export
-#' @examples
-#' # To be executed interactively only
-#' if (interactive()) {
-#'   run_my_app()
-#' }
-#' @import shiny
-run_my_app <- function(...) {
-  shinyApp(ui = ui, server = server, ...)
-}
+shinyApp(ui = ui, server = server)
